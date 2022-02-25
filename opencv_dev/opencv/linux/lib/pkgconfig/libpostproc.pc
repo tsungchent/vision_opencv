@@ -1,0 +1,14 @@
+prefix=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/
+exec_prefix=${prefix}
+libdir=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//lib
+includedir=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//include
+
+Name: libpostproc
+Description: FFmpeg postprocessing library
+Version: 55.7.100
+Requires: 
+Requires.private: libavutil >= 56.51.100
+Conflicts:
+Libs: -L${libdir} -Wl,-rpath,/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//lib -lpostproc 
+Libs.private: -lm
+Cflags: -I${includedir}

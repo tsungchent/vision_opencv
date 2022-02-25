@@ -1,0 +1,14 @@
+prefix=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/
+exec_prefix=${prefix}
+libdir=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//lib
+includedir=/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.51.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir} -Wl,-rpath,/home/ubuntu/FFmpeg/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding/padding//lib -lavutil 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}

@@ -1,15 +1,21 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(image_geometry)
 
+find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
+find_package(opencv_dev REQUIRED)
+find_package(rcpputils REQUIRED)
 
+# include_directories(${CMAKE_INSTALL_PREFIX})
+# message("CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}")
+# message("***********************************************")
 ament_python_install_package(${PROJECT_NAME})
 
 # Default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
+# if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+#endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra)
@@ -25,12 +31,16 @@ add_library(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-target_link_libraries(${PROJECT_NAME} PUBLIC
-  opencv_calib3d
-  opencv_core
-  opencv_highgui
-  opencv_imgproc
-  ${sensor_msgs_TARGETS})
+
+ament_target_dependencies(${PROJECT_NAME}
+  "sensor_msgs"
+  "rcpputils"
+  OpenCV
+  # Boost::headers
+  # opencv_core
+  # opencv_imgproc
+  # opencv_imgcodecs
+)
 
 install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 

@@ -1,0 +1,2 @@
+set(OpenCV_DIR @OpenCV_DIR@)
+# find_package(OpenCV 4 REQUIRED)

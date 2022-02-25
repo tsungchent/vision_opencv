@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.14)
 project(cv_bridge)
 
+find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
-
+find_package(rcpputils REQUIRED)
 # Default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
-
+# if(NOT CMAKE_CXX_STANDARD)
+set(CMAKE_CXX_STANDARD 17)
+# endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra)
 endif()
@@ -35,27 +35,35 @@ endif()
 
 find_package(sensor_msgs REQUIRED)
 
-find_package(OpenCV 4 QUIET
+# set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/opencvlib/opencv/linux/lib/cmake/opencv4)
+find_package(opencv_dev)
+
+message("OpenCV_DIR ${OpenCV_DIR}")
+message("***********************************************")
+
+find_package(OpenCV 4 QUIET 
   COMPONENTS
     opencv_core
     opencv_imgproc
     opencv_imgcodecs
   CONFIG
 )
-if(NOT OpenCV_FOUND)
-  find_package(OpenCV 3 REQUIRED
-    COMPONENTS
-      opencv_core
-      opencv_imgproc
-      opencv_imgcodecs
-    CONFIG
-  )
-endif()
+# if(NOT OpenCV_FOUND)
+#  find_package(OpenCV 3 REQUIRED
+#    COMPONENTS
+#      opencv_core
+#      opencv_imgproc
+#      opencv_imgcodecs
+#    CONFIG
+#  )
+#endif()
 
 if(NOT ANDROID)
   add_subdirectory(python)
 endif()
 
+# include_directories(${CMAKE_INSTALL_PREFIX}/include)
+# message(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 add_subdirectory(src)
 
 # cv_bridge_lib_dir is passed as APPEND_LIBRARY_DIRS for each ament_add_gtest call so
@@ -68,12 +76,11 @@ if(BUILD_TESTING)
   add_subdirectory(test)
 endif()
 
+
 ament_export_dependencies(
   OpenCV
   sensor_msgs
 )
-
-ament_export_targets(export_${PROJECT_NAME})
 
 # install the include folder
 install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
@@ -83,6 +90,9 @@ install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
 )
+
+ament_export_include_directories(include/${PROJECT_NAME})
+ament_export_targets(export_${PROJECT_NAME})
 
 ament_package(
   CONFIG_EXTRAS "cmake/cv_bridge-extras.cmake.in"

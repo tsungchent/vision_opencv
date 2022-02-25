@@ -13,11 +13,13 @@
 
   <author>Patrick Mihelich</author>
   <author>Vincent Rabaud</author>
-
+  
+  <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_python</buildtool_depend>
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
-  <depend>libopencv-dev</depend>
+  <depend>opencv_dev</depend>
   <depend>sensor_msgs</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
