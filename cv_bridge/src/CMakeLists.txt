@@ -17,8 +17,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 if (Boost_USE_STATIC_LIBS)
     target_compile_definitions(${PROJECT_NAME} PUBLIC BOOST_PYTHON_STATIC_LIB)
-    target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MAJOR_VERSION=3)
-    target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MINOR_VERSION=7)
+    # target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MAJOR_VERSION=3)
+    # target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MINOR_VERSION=7)
 endif()
 
 install(TARGETS ${PROJECT_NAME} EXPORT export_${PROJECT_NAME}
