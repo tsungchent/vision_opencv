@@ -15,6 +15,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   Boost::headers
   rcpputils::rcpputils)
 
+if (Boost_USE_STATIC_LIBS)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC BOOST_PYTHON_STATIC_LIB)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MAJOR_VERSION=3)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC PY_MINOR_VERSION=7)
+endif()
+
 install(TARGETS ${PROJECT_NAME} EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
@@ -26,11 +32,15 @@ install(FILES
   DESTINATION include/${PROJECT_NAME}/${PROJECT_NAME})
 
 if(NOT ANDROID)
-  Python3_add_library(${PROJECT_NAME}_boost MODULE module.cpp module_opencv3.cpp)
+  # Python3_add_library(${PROJECT_NAME}_boost MODULE module.cpp module_opencv3.cpp)
+  Python_add_library(${PROJECT_NAME}_boost MODULE module.cpp module_opencv3.cpp)
   target_link_libraries(${PROJECT_NAME}_boost PRIVATE
     ${PROJECT_NAME}
     ${boost_python_target}
-    Python3::NumPy)
+    Python::NumPy
+    # Python3::NumPy
+    )
+    
   target_compile_definitions(${PROJECT_NAME}_boost PRIVATE PYTHON3)
 
   if(OpenCV_VERSION_MAJOR VERSION_EQUAL 4)

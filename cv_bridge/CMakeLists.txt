@@ -1,7 +1,18 @@
 cmake_minimum_required(VERSION 3.14)
 project(cv_bridge)
 
+find_package(ament_cmake_python REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
+
+# Find python before pybind11
+find_package(python_cmake_module REQUIRED)
+find_package(PythonExtra REQUIRED)
+
+get_filename_component(Python_ROOT_DIR ${PYTHON_EXECUTABLE} DIRECTORY)
+find_package(Python ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED COMPONENTS Development NumPy)
+
+set(Python3_VERSION_MAJOR PYTHON_VERSION_MAJOR)
+set(Python3_VERSION_MINOR PYTHON_VERSION_MINOR)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -16,7 +27,7 @@ if(ANDROID)
   find_package(Boost REQUIRED)
   set(boost_python_target "")
 else()
-  find_package(Python3 REQUIRED COMPONENTS Development NumPy)
+  # find_package(Python3 REQUIRED COMPONENTS Development NumPy)
   find_package(Boost QUIET)
   if(Boost_VERSION_STRING VERSION_LESS "1.67")
     # This is a bit of a hack to suppress a warning
@@ -28,8 +39,8 @@ else()
     find_package(Boost REQUIRED COMPONENTS python3)
     set(boost_python_target "Boost::python3")
   else()
-    find_package(Boost REQUIRED COMPONENTS python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR})
-    set(boost_python_target "Boost::python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+    find_package(Boost REQUIRED COMPONENTS python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+    set(boost_python_target "Boost::python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}")
   endif()
 endif()
 
